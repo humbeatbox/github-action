@@ -35,4 +35,19 @@ jobs:
       - name: run multi-line cript
         run : |
           echo "Hello Word windows"
-          Get-Date
+
+# jobs:
+  build_node:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [ 14, 16, 18 ]
+    name: Node ${{ matrix.node }} sample
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm ci
+      - run: npm test
